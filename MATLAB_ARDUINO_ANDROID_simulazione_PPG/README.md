@@ -1,0 +1,1 @@
+I simulate a PPG signal using an image that I found on internet, than with Grabit I set some point an I exported the Data002.mat array filled by this point, the I interpolated thisarray to have a denser array of 10.000 values to send to Arduino
