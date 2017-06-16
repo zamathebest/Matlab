@@ -5,7 +5,10 @@ x=Data002(:,1);
 y=Data002(:,2);
 xi=linspace(0,10000,10000);
 yi=interp1(x,y,xi,'spline');
-plot(xi,yi);
+%plot(xi,yi);
+findpeaks(yi,xi,'MinPeakProminence',4,'Annotate','extents')
+[pks,locs,widths,proms] = findpeaks(yi,xi);
+widths(2:3)
 %mapping of yi fra 0 e 1023
 for i=1:10000
     yi(i)=yi(i)/1000;
@@ -14,7 +17,7 @@ end
 %%
 %Apro la comunicazione seriale
 
-arduinoCom = serial('/dev/ttyUSB3');  % insert your serial properties here
+arduinoCom = serial('/dev/ttyUSB0');  % insert your serial properties here
 set(arduinoCom, 'Baudrate', 9600);
 set(arduinoCom, 'Parity', 'none');
 set(arduinoCom, 'Databits', 8);
@@ -23,12 +26,14 @@ set(arduinoCom, 'Terminator', 'CR/LF');
 set(arduinoCom, 'OutputBufferSize', 22);
 
 fopen(arduinoCom);%NB: non chiudo la comunicazione con un fclose()
-%Non chiudendo con fclose arduino rimarra nel suo loop
+%Non chiudendo con fclose arduino rimarra nel suoloop
 %while(Serial.available>0){...}
 %quindi devo mettere la scrittura bluetooth in quel loop
+
+%%per chiudere la comunicazione usare "intrreset" da riga di comando matlab
 %%
 %%parameti da settare per l'onda PPG
-bpm=90;
+bpm=60;
 saturacion=98;
 
 %%
